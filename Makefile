@@ -1,5 +1,11 @@
-dev:
-	docker build -t gitdump:latest . && docker run -it --rm -v ${CURDIR}:/usr/src/app gitdump:latest && docker exec -it gitdump:latest
+dev: build run
+osx: build mac
 
-osx:
-	docker run --rm -v ${CURDIR}:/usr/src/app -w /usr/src/app golang:1.13 env GOOS=darwin GOARCH=amd64 go build -i -o gitdump && chmod +x gitdump
+build:
+	docker build -t gitdump:latest .
+
+run:
+	docker build -t gitdump:latest . && docker run -it --rm -v ${CURDIR}:/usr/src/app/go/src/github.com/mrauer/gitdump gitdump:latest && docker exec -it gitdump:latest
+
+mac:
+	docker run --rm -w /usr/src/app/go/src/github.com/mrauer/gitdump -v ${CURDIR}:/usr/src/app/go/src/github.com/mrauer/gitdump gitdump:latest env GOOS=darwin GOARCH=amd64 go build -i -o gitdump && chmod +x gitdump
