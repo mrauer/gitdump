@@ -7,19 +7,24 @@ import (
 )
 
 var str = `
-Usage: gitdump COMMAND
+Usage: gitdump MODEL [OWNER] COMMAND
 
 A tool for downloading GitHub repositories
 
+Models:
+  users    Public repositories
+  orgs     Private repositories
+
 Commands:
-  get      Download a single GitHub repository
-  dump     Download an entire GitHub account
+  dump     Download the repositories
+
+Owner: account name
 `
 
 var rootCmd = &cobra.Command{
 	Use:   "gitdump",
-	Short: "TBD",
-	Long:  `TBD`,
+	Short: "A tool for downloading GitHub repositories",
+	Long:  `A tool for downloading GitHub repositories`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(str)
 	},

@@ -2,25 +2,23 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
 
 func init() {
-	getCmd.AddCommand(tbdCmd)
-	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(usersCmd)
 }
 
-var getCmd = &cobra.Command{
-	Use:   "get",
-	Short: "TBD",
-	Long:  `TBD`,
-}
-
-var tbdCmd = &cobra.Command{
-	Use:   "tbd",
+var usersCmd = &cobra.Command{
+	Use:   "users",
 	Short: "TBD",
 	Long:  `TBD`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("my command here")
+		if len(args) == 1 {
+			lib.GetUserRepos(args[0])
+		} else {
+			fmt.Println("Usage: gitdump users USERNAME <ACTION>")
+		}
 	},
 }
