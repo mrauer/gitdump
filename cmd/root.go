@@ -7,18 +7,21 @@ import (
 )
 
 var str = `
-Usage: gitdump MODEL [OWNER] COMMAND
+Usage: gitdump MODEL COMMAND [ARG1] [ARG2]...
 
 A tool for downloading GitHub repositories
 
 Models:
   users    Public repositories
-  orgs     Private repositories
+  orgs     Private repositories (require authentication)
 
 Commands:
-  dump     Download the repositories
+  describe   Display information about the repository
+  get        Download a copy of the repository
 
-Owner: account name
+Args:
+  slug          Unique account identifier
+  repository    ID of the repository
 `
 
 var rootCmd = &cobra.Command{
