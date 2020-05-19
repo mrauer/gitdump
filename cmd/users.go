@@ -9,6 +9,7 @@ import (
 func init() {
 	rootCmd.AddCommand(usersCmd)
 	usersCmd.AddCommand(usersGetCmd)
+	usersCmd.AddCommand(usersDumpCmd)
 }
 
 var usersCmd = &cobra.Command{
@@ -23,9 +24,22 @@ var usersGetCmd = &cobra.Command{
 	Long:  `TBD`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) >= 1 {
-			lib.GetRepository(args)
+			lib.GetPublicRepository(args)
 		} else {
 			fmt.Println("\nUsage: gitdump users get <USERNAME> <REPOSITORY>\n")
+		}
+	},
+}
+
+var usersDumpCmd = &cobra.Command{
+	Use:   "dump",
+	Short: "Dump public repositories",
+	Long:  `Dump all the public repositories of a given account`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 1 {
+			lib.GetPublicRepositories(args[0])
+		} else {
+			fmt.Println("\nUsage: gitdump users dump <USERNAME>\n")
 		}
 	},
 }
