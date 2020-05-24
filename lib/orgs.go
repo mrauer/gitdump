@@ -6,6 +6,7 @@ import (
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 	"os"
+	"time"
 )
 
 func GetPrivateRepository(args []string) error {
@@ -19,8 +20,9 @@ func GetPrivateRepository(args []string) error {
 
 	// list all repositories for the authenticated user
 	if len(args) < 1 {
-		opts := &github.RepositoryListOptions{ListOptions: github.ListOptions{PerPage: 30}}
-		repos, _, err := client.Repositories.List(ctx, "", opts)
+		opt := &github.RepositoryListByOrgOptions{ListOptions: github.ListOptions{PerPage: 1000}}
+		repos, _, err := client.Repositories.ListByOrg(ctx, "EENCloud", opt)
+
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
@@ -30,6 +32,18 @@ func GetPrivateRepository(args []string) error {
 
 		for _, repo := range repos {
 			fmt.Println(fmt.Sprintf("- %s", *repo.Name))
+		}
+
+		url, _, _ := client.Repositories.GetArchiveLink(ctx, "EENCloud", "probe", "zipball", nil, true)
+
+		// Today's directory
+		path := fmt.Sprintf("data/%s", time.Now().Format("2006-01-02"))
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			os.Mkdir(path, 0700)
+		}
+
+		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, "probe"), url.String()); err != nil {
+			fmt.Println(err.Error())
 		}
 	} else {
 		fmt.Println("Will download here")
