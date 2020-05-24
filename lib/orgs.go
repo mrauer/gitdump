@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func GetPrivateRepository() {
+func GetPrivateRepository(args []string) error {
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GIT_TOKEN")},
@@ -18,8 +18,21 @@ func GetPrivateRepository() {
 	client := github.NewClient(tc)
 
 	// list all repositories for the authenticated user
-	repos, _, err := client.Repositories.List(ctx, "", nil)
+	if len(args) < 1 {
+		opts := &github.RepositoryListOptions{ListOptions: github.ListOptions{PerPage: 30}}
+		repos, _, err := client.Repositories.List(ctx, "", opts)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
 
-	fmt.Println(repos)
-	fmt.Println(err)
+		fmt.Println("\nUsage: gitdump orgs get <REPOSITORY>\n")
+
+		for _, repo := range repos {
+			fmt.Println(fmt.Sprintf("- %s", *repo.Name))
+		}
+	} else {
+		fmt.Println("Will download here")
+	}
+	return nil
 }

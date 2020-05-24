@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
@@ -22,10 +21,6 @@ var orgsGetCmd = &cobra.Command{
 	Short: "TBD",
 	Long:  `TBD`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) >= 1 {
-			lib.GetPrivateRepository()
-		} else {
-			fmt.Println("\nUsage: gitdump orgs get <USERNAME> <REPOSITORY>\n")
-		}
+		lib.GetPrivateRepository(args)
 	},
 }
