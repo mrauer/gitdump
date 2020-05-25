@@ -18,35 +18,49 @@ func GetPrivateRepository(args []string) error {
 
 	client := github.NewClient(tc)
 
-	// list all repositories for the authenticated user
-	if len(args) < 1 {
+	fmt.Println("\nUsage: gitdump orgs get <ORG> <REPOSITORY>\n")
+	if len(args) == 0 {
+		organizations, _, err := client.Organizations.List(ctx, "", nil)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		for _, organization := range organizations {
+			fmt.Println(fmt.Sprintf("- %s", *organization.Login))
+		}
+	}
+
+	if len(args) == 1 {
+		// list all repositories for the authenticated user
 		opt := &github.RepositoryListByOrgOptions{ListOptions: github.ListOptions{PerPage: 1000}}
-		repos, _, err := client.Repositories.ListByOrg(ctx, "EENCloud", opt)
+		repos, _, err := client.Repositories.ListByOrg(ctx, args[0], opt)
 
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
 		}
-
-		fmt.Println("\nUsage: gitdump orgs get <REPOSITORY>\n")
-
 		for _, repo := range repos {
 			fmt.Println(fmt.Sprintf("- %s", *repo.Name))
 		}
+	}
 
-		url, _, _ := client.Repositories.GetArchiveLink(ctx, "EENCloud", "probe", "zipball", nil, true)
+	if len(args) == 2 {
+		url, _, err := client.Repositories.GetArchiveLink(ctx, args[0], args[1], "zipball", nil, true)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
 
 		// Today's directory
-		path := fmt.Sprintf("data/%s", time.Now().Format("2006-01-02"))
+		path := fmt.Sprintf("data/%s/%s", args[0], time.Now().Format("2006-01-02"))
 		if _, err := os.Stat(path); os.IsNotExist(err) {
-			os.Mkdir(path, 0700)
+			os.MkdirAll(path, 0700)
 		}
 
-		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, "probe"), url.String()); err != nil {
+		fmt.Println(fmt.Sprintf("Downloading %s", args[1]))
+		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, args[1]), url.String()); err != nil {
 			fmt.Println(err.Error())
 		}
-	} else {
-		fmt.Println("Will download here")
 	}
 	return nil
 }
