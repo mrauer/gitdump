@@ -64,3 +64,42 @@ func GetPrivateRepository(args []string) error {
 	}
 	return nil
 }
+
+func GetPrivateRepositories(organization string) error {
+
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: os.Getenv("GIT_TOKEN")},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+
+	client := github.NewClient(tc)
+
+	opt := &github.RepositoryListByOrgOptions{ListOptions: github.ListOptions{PerPage: 1000}}
+	repos, _, err := client.Repositories.ListByOrg(ctx, organization, opt)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+
+	// Today's directory
+	path := fmt.Sprintf("data/%s/%s", organization, time.Now().Format("2006-01-02"))
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		os.MkdirAll(path, 0700)
+	}
+
+	fmt.Println("\nDownloading all repositories:\n")
+	for _, repo := range repos {
+		fmt.Println(fmt.Sprintf("Downloading %s", *repo.Name))
+		url, _, err := client.Repositories.GetArchiveLink(ctx, organization, *repo.Name, "zipball", nil, true)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, *repo.Name), url.String()); err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+	return nil
+}
