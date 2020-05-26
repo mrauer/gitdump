@@ -6,7 +6,6 @@ import (
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 	"os"
-	"time"
 )
 
 func GetPrivateRepository(args []string) error {
@@ -52,10 +51,7 @@ func GetPrivateRepository(args []string) error {
 		}
 
 		// Today's directory
-		path := fmt.Sprintf("data/%s/%s", args[0], time.Now().Format("2006-01-02"))
-		if _, err := os.Stat(path); os.IsNotExist(err) {
-			os.MkdirAll(path, 0700)
-		}
+		path, _ := MakeDir(args[0])
 
 		fmt.Println(fmt.Sprintf("Downloading %s", args[1]))
 		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, args[1]), url.String()); err != nil {
@@ -84,10 +80,7 @@ func GetPrivateRepositories(organization string) error {
 	}
 
 	// Today's directory
-	path := fmt.Sprintf("data/%s/%s", organization, time.Now().Format("2006-01-02"))
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		os.MkdirAll(path, 0700)
-	}
+	path, _ := MakeDir(organization)
 
 	fmt.Println("\nDownloading all repositories:\n")
 	for _, repo := range repos {
