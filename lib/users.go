@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -57,10 +56,7 @@ func GetPublicRepository(args []string) {
 		fmt.Println(fmt.Sprintf("\nDownloading %s\n", repository))
 
 		// Today's directory
-		path := fmt.Sprintf("data/%s", time.Now().Format("2006-01-02"))
-		if _, err := os.Stat(path); os.IsNotExist(err) {
-			os.Mkdir(path, 0700)
-		}
+		path, _ := MakeDir(args[0])
 
 		url := fmt.Sprintf("%s/archive/master.zip", results[repository].Url)
 
@@ -90,10 +86,7 @@ func GetPublicRepositories(account string) {
 	}
 
 	// Today's directory
-	path := fmt.Sprintf("data/%s/%s", account, time.Now().Format("2006-01-02"))
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		os.MkdirAll(path, 0700)
-	}
+	path, _ := MakeDir(account)
 
 	fmt.Println("\nDownloading all repositories:\n")
 	for i := 0; i < len(data); i++ {
