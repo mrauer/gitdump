@@ -1,7 +1,10 @@
 package lib
 
 import (
+	"context"
 	"fmt"
+	"github.com/google/go-github/github"
+	"golang.org/x/oauth2"
 	"io"
 	"net/http"
 	"os"
@@ -35,4 +38,16 @@ func MakeDir(entity string) (string, error) {
 		return path, nil
 	}
 	return "", nil
+}
+
+func GitLogin() (context.Context, *github.Client) {
+	ctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: os.Getenv("GIT_TOKEN")},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+
+	client := github.NewClient(tc)
+
+	return ctx, client
 }
