@@ -1,21 +1,12 @@
 package lib
 
 import (
-	"context"
 	"fmt"
 	"github.com/google/go-github/github"
-	"golang.org/x/oauth2"
-	"os"
 )
 
 func GetPrivateRepository(args []string) error {
-	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GIT_TOKEN")},
-	)
-	tc := oauth2.NewClient(ctx, ts)
-
-	client := github.NewClient(tc)
+	ctx, client := GitLogin()
 
 	fmt.Println("\nUsage: gitdump orgs get <ORG> <REPOSITORY>\n")
 	if len(args) == 0 {
@@ -62,14 +53,7 @@ func GetPrivateRepository(args []string) error {
 }
 
 func GetPrivateRepositories(organization string) error {
-
-	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GIT_TOKEN")},
-	)
-	tc := oauth2.NewClient(ctx, ts)
-
-	client := github.NewClient(tc)
+	ctx, client := GitLogin()
 
 	opt := &github.RepositoryListByOrgOptions{ListOptions: github.ListOptions{PerPage: 1000}}
 	repos, _, err := client.Repositories.ListByOrg(ctx, organization, opt)
