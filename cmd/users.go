@@ -10,6 +10,7 @@ func init() {
 	rootCmd.AddCommand(usersCmd)
 	usersCmd.AddCommand(usersGetCmd)
 	usersCmd.AddCommand(usersDumpCmd)
+	usersCmd.AddCommand(usersPrivateCmd)
 }
 
 var usersCmd = &cobra.Command{
@@ -41,5 +42,14 @@ var usersDumpCmd = &cobra.Command{
 		} else {
 			fmt.Println("\nUsage: gitdump users dump <USERNAME>\n")
 		}
+	},
+}
+
+var usersPrivateCmd = &cobra.Command{
+	Use:   "private",
+	Short: "List private repositories",
+	Long:  `List private repositories`,
+	Run: func(cmd *cobra.Command, args []string) {
+		lib.GetUsersPrivateRepository(args)
 	},
 }
