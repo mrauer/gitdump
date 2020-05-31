@@ -129,3 +129,33 @@ func GetUsersPrivateRepository(args []string) {
 		}
 	}
 }
+
+func GetUsersPrivateRepositories(owner string) error {
+	ctx, client := GitLogin()
+
+	opt := &github.RepositoryListOptions{ListOptions: github.ListOptions{PerPage: 1000}, Type: "owner"}
+
+	repos, _, err := client.Repositories.List(ctx, "", opt)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+
+	// Today's directory
+	path, _ := MakeDir(owner)
+
+	fmt.Println("\nDownloading all repositories:\n")
+	for _, repo := range repos {
+		fmt.Println(fmt.Sprintf("Downloading %s", *repo.Name))
+		url, _, err := client.Repositories.GetArchiveLink(ctx, owner, *repo.Name, "zipball", nil, true)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, *repo.Name), url.String()); err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+	return nil
+}
