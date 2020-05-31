@@ -3,6 +3,7 @@ package lib
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/google/go-github/github"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -93,6 +94,37 @@ func GetPublicRepositories(account string) {
 		fmt.Println(fmt.Sprintf("Downloading %s", data[i].Name))
 		url := fmt.Sprintf("%s/archive/master.zip", data[i].Url)
 		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, data[i].Name), url); err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+}
+
+func GetUsersPrivateRepository(args []string) {
+	ctx, client := GitLogin()
+
+	opt := &github.RepositoryListOptions{ListOptions: github.ListOptions{PerPage: 1000}, Type: "owner"}
+
+	repos, _, err := client.Repositories.List(ctx, "", opt)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	for _, repo := range repos {
+		fmt.Println(fmt.Sprintf("- %s", *repo.Name))
+	}
+	fmt.Println("\nTo download: gitdump orgs private <OWNER> <REPOSITORY>\n")
+	if len(args) == 2 {
+		owner := args[0]
+		repository := args[1]
+		url, _, err := client.Repositories.GetArchiveLink(ctx, owner, repository, "zipball", nil, true)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		// Today's directory
+		path, _ := MakeDir(owner)
+
+		fmt.Println(fmt.Sprintf("Downloading %s", repository))
+		if err = DownloadFile(fmt.Sprintf("%s/%s.zip", path, repository), url.String()); err != nil {
 			fmt.Println(err.Error())
 		}
 	}

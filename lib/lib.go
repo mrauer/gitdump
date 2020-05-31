@@ -37,7 +37,7 @@ func MakeDir(entity string) (string, error) {
 		os.MkdirAll(path, 0700)
 		return path, nil
 	}
-	return "", nil
+	return path, nil
 }
 
 func GitLogin() (context.Context, *github.Client) {
