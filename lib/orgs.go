@@ -5,7 +5,7 @@ import (
 	"github.com/google/go-github/github"
 )
 
-func GetPrivateRepository(args []string) error {
+func GetOrgsPrivateRepository(args []string) error {
 	ctx, client := GitLogin()
 
 	fmt.Println("\nUsage: gitdump orgs get <ORG> <REPOSITORY>\n")

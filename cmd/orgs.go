@@ -23,7 +23,7 @@ var orgsGetCmd = &cobra.Command{
 	Short: "TBD",
 	Long:  `TBD`,
 	Run: func(cmd *cobra.Command, args []string) {
-		lib.GetPrivateRepository(args)
+		lib.GetOrgsPrivateRepository(args)
 	},
 }
 
