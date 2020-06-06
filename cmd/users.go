@@ -1,67 +1,50 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
 
 func init() {
 	rootCmd.AddCommand(usersCmd)
+	usersCmd.AddCommand(usersListCmd)
 	usersCmd.AddCommand(usersGetCmd)
 	usersCmd.AddCommand(usersDumpCmd)
-	usersCmd.AddCommand(usersPrivateCmd)
-	usersCmd.AddCommand(usersPrivateDumpCmd)
 }
 
 var usersCmd = &cobra.Command{
 	Use:   "users",
-	Short: "Users model.",
-	Long:  `Act on publicly available information about someone with a GitHub account.`,
+	Short: "Users scope",
+	Long: `
+Public repositories commands:
+  gitdump users ls
+  gitdump users get [user] [repo]
+  gitdump users dump [user]`,
+}
+
+var usersListCmd = &cobra.Command{
+	Use:   "ls",
+	Short: "List public repositories.",
+	Long:  `List the public repositories from a public user account`,
+	Run: func(cmd *cobra.Command, args []string) {
+		lib.ListPublicRepositories(args)
+	},
 }
 
 var usersGetCmd = &cobra.Command{
 	Use:   "get",
-	Short: "TBD",
-	Long:  `TBD`,
+	Short: "Download a public repository",
+	Long:  `Download a public repository from a public user account`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) >= 1 {
-			lib.GetPublicRepository(args)
-		} else {
-			fmt.Println("\nUsage: gitdump users get <USERNAME> <REPOSITORY>\n")
-		}
+		lib.GetPublicRepository(args)
 	},
 }
 
 var usersDumpCmd = &cobra.Command{
 	Use:   "dump",
-	Short: "Dump public repositories",
-	Long:  `Dump all the public repositories of a given account`,
+	Short: "Dump all public repositories",
+	Long:  `Download all public repositories from a public user account`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 1 {
-			lib.GetPublicRepositories(args[0])
-		} else {
-			fmt.Println("\nUsage: gitdump users dump <USERNAME>\n")
-		}
-	},
-}
-
-var usersPrivateCmd = &cobra.Command{
-	Use:   "private",
-	Short: "List private repositories",
-	Long:  `List private repositories`,
-	Run: func(cmd *cobra.Command, args []string) {
-		lib.GetUsersPrivateRepository(args)
-	},
-}
-
-var usersPrivateDumpCmd = &cobra.Command{
-	Use:   "privatedump",
-	Short: "Dump private repositories",
-	Long:  `Dump all the private repositories of a given account`,
-	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 1 {
-			lib.GetUsersPrivateRepositories(args[0])
-		}
+		lib.DumpPublicRepositories(args)
 	},
 }

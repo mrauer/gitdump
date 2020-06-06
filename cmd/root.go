@@ -7,21 +7,25 @@ import (
 )
 
 var str = `
-Usage: gitdump MODEL COMMAND [ARG1] [ARG2]...
+Usage: gitdump SCOPE COMMAND [ARG1] [ARG2]...
 
 A tool for downloading GitHub repositories
 
-Models:
+Scopes:
   users    Public repositories
-  orgs     Private repositories (require authentication)
+  owners   Private repositories (require authentication)
+  orgs     Organizations repositories (require authentication)
 
 Commands:
-  describe   Display information about the repository
-  get        Download a copy of the repository
+  ls       List the repositories
+  get      Download a single repository
+  dump     Download all repositories
 
 Args:
-  slug          Unique account identifier
-  repository    ID of the repository
+  user     Public account
+  owner    Account associated with the the token
+  org      Organization name
+  repo     Repository name
 `
 
 var rootCmd = &cobra.Command{
