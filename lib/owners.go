@@ -19,8 +19,8 @@ func ListPrivateRepositories() {
 }
 
 func GetPrivateRepository(args []string) {
-	ctx, client := GitLogin()
 	if len(args) == 2 {
+		ctx, client := GitLogin()
 		owner := args[0]
 		repo := args[1]
 		url, _, err := client.Repositories.GetArchiveLink(ctx, owner, repo, "zipball", nil, true)
