@@ -7,9 +7,6 @@
 
 # configure golangci-lint
 # see https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml
-run:
-  modules-download-mode: vendor
-
 issues:
   exclude-rules:
     - path: _test\.go
