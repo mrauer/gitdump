@@ -2,4 +2,4 @@
 *.zip
 bin/osx/gitdump
 bin/linux/gitdump
-bin/windows/gitdump
+bin/windows/gitdump.exe
