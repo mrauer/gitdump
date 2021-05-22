@@ -1,0 +1,63 @@
+---
+#########################
+#########################
+## Golang Linter rules ##
+#########################
+#########################
+
+# configure golangci-lint
+# see https://github.com/golangci/golangci-lint/blob/master/.golangci.example.yml
+run:
+  modules-download-mode: vendor
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+      - dupl
+      - gosec
+      - goconst
+linters:
+  disable-all: true
+  enable:
+    - whitespace
+    - gofmt
+    - goimports
+    - prealloc
+    - wsl
+    - testpackage
+    - nestif
+    - nakedret
+    - gocyclo
+    - gocognit
+    - nolintlint
+    - nlreturn
+    - misspell
+    - lll
+    - scopelint
+    - ineffassign
+    - goprintffuncname
+    - gomodguard
+    - goheader
+    - godox
+    - godot
+    - goconst
+    - funlen
+    - dupl
+    - dogsled
+    - gomnd
+
+linters-settings:
+  errcheck:
+    # report about assignment of errors to blank identifier: `num, _ := strconv.Atoi(numStr)`;
+    # default is false: such cases aren't reported by default.
+    check-blank: true
+  govet:
+    # report about shadowed variables
+    check-shadowing: true
+  gocyclo:
+    # minimal code complexity to report, 30 by default
+    min-complexity: 15
+  maligned:
+    # print struct with more effective memory layout or not, false by default
+    suggest-new: true
