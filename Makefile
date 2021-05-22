@@ -1,10 +1,9 @@
-dev: build run
 osx: build mac
 
 build:
 	docker build -t gitdump:latest .
 
-run:
+dev:
 	docker build -t gitdump:latest . && docker run -it --rm -v ${CURDIR}:/usr/src/app/go/src/github.com/mrauer/gitdump gitdump:latest && docker exec -it gitdump:latest
 
 mac:
