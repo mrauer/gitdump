@@ -41,7 +41,7 @@ func GetOrganizationRepository(args []string) {
 		ctx, client := GitLogin()
 		owner := args[0]
 		repo := args[1]
-		url, _, err := client.Repositories.GetArchiveLink(ctx, owner, repo, "zipball", nil, true)
+		url, _, err := client.Repositories.GetArchiveLink(ctx, owner, repo, github.Zipball, nil)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -68,7 +68,7 @@ func DumpOrganizationRepositories(args []string) error {
 		path, _ := MakeDir(org)
 		for _, repo := range repos {
 			fmt.Println(fmt.Sprintf("Downloading %s", *repo.Name))
-			url, _, err := client.Repositories.GetArchiveLink(ctx, org, *repo.Name, "zipball", nil, true)
+			url, _, err := client.Repositories.GetArchiveLink(ctx, org, *repo.Name, github.Zipball, nil)
 			if err != nil {
 				fmt.Println(err.Error())
 				return err
