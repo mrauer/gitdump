@@ -1,6 +1,3 @@
-// gitdump config token <>
-// githump config path <>
-
 package cmd
 
 import (
