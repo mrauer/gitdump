@@ -1,4 +1,3 @@
-
 // gitdump config token <>
 // githump config path <>
 
@@ -28,6 +27,7 @@ var configTokenCmd = &cobra.Command{
 	Use:   "token",
 	Short: "Set the GitHub Token",
 	Long:  `Add your GitHub Token as an argument`,
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		lib.ConfigToken(args)
 	},
@@ -37,6 +37,7 @@ var configPathCmd = &cobra.Command{
 	Use:   "path",
 	Short: "Set the path to download files",
 	Long:  `This will be where your files will be downloaded`,
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		lib.ConfigPath(args)
 	},
