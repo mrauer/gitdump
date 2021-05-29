@@ -1,5 +1,6 @@
 .DS_Store
 *.zip
+gitdump
 bin/osx/gitdump
 bin/linux/gitdump
 bin/windows/gitdump.exe
