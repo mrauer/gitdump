@@ -7,7 +7,7 @@ dev:
 binary:
 	env GOOS=linux GOARCH=amd64 go build -i -o gitdump
 
-release:
+releases:
 	env GOOS=darwin GOARCH=amd64 go build -i -o bin/osx/gitdump
 	env GOOS=linux GOARCH=amd64 go build -i -o bin/linux/gitdump
 	env GOOS=windows GOARCH=amd64 go build -i -o bin/windows/gitdump.exe
