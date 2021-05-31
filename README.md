@@ -30,7 +30,7 @@
 * [license](#license)
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About the Project
 
 GitDump is a tool that will give you the ability to download one or all the repositories in a GitHub account. This could be achieved for a public, private or an organization account. That way you get an archive of your work or somebody else work.
 
