@@ -92,16 +92,16 @@ Those are the main commands you can use:
 ```sh
 gitdump users ls <user> (list the repositories of a public user)
 gitdump users get <user> <repository> (download a public repository)
-gitdump users dump <user> (download all repositories)
+gitdump users dump <user> (download all repositories from a public user)
 
 gitdump owners ls <owner> (list the repositories of a private user)
 gitdump owners get <owner> <repository> (download a private repository)
-gitdump owners dump <owner> (download all repositories)
+gitdump owners dump <owner> (download all repositories from a private user)
 
 gitdump orgs ls (list all organizations in your account)
 gitdump orgs ls <organization> (list the repositories of an organization)
 gitdump orgs get <organization> <repository> (download an organization repository)
-gitdump orgs dump <organization> (download all repositories)
+gitdump orgs dump <organization> (download all repositories from an organization)
 ```
 
 Example:
