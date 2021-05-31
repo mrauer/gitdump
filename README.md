@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/mrauer/gitdump">
-    <img src="images/logo.png" alt="Logo">
+    <img src="images/logo.png" alt="Logo" width="225" height="225">
   </a>
 
   <h3 align="center">GitDump</h3>
