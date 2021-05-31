@@ -12,6 +12,7 @@
     <br />
     <br />
     <a href="https://github.com/mrauer/gitdump/issues">Report Bug</a>
+    |
     <a href="https://github.com/mrauer/gitdump/issues">Request Feature</a>
   </p>
 </p>
