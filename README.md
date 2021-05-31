@@ -114,7 +114,7 @@ gitdump users ls Netflix (list all public repositories of Netflix)
 <!-- CONTRIBUTE -->
 ## Contribute
 
-If you have any ideas or find a bug, you could always submit on the "Issues" section but you can also directly help since the project is opensource. Those are the commands you need to run a local machine:
+If you have any ideas or find a bug, you could always submit on the `issues` section but you can also directly help since the project is open source. Those are the commands you need to run on a local machine:
 
 ```sh
 make dev (run a dev machine assuming you have docker installed)
