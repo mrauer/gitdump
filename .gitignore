@@ -1,5 +1,10 @@
+# Ignore macOS system files
 .DS_Store
+
+# Ignore zip files
 *.zip
+
+# Ignore compiled binaries and build artifacts
 gitdump
 bin/osx/gitdump
 bin/linux/gitdump

@@ -27,56 +27,50 @@
 * [Configuration](#configuration)
 * [Usage](#usage)
 * [Contribute](#contribute)
-* [license](#license)
+* [License](#license)
 
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 
-GitDump is a tool that will give you the ability to download one or all the repositories in a GitHub account. This could be achieved for a public, private or an organization account. That way you get an archive of your work or somebody else work.
+GitDump is a tool created to enable you to download either specific repositories or the complete repository set associated with a GitHub account. Whether the account is public, private, or affiliated with an organization, GitDump simplifies the process of creating an archive. This empowers you to preserve your own projects or those of others.
 
 <!-- INSTALLATION -->
 ## Installation
 
-This software can be used on Linux, Mac and Windows.
-
-Just go to the releases page if you want to download the binaries at [https://github.com/mrauer/gitdump/releases](https://github.com/mrauer/gitdump/releases) or copy/paste the following commands if you're on Linux or Mac.
+This application is compatible with Linux, Mac, and Windows operating systems. To obtain the binaries, you can visit the releases page at [https://github.com/mrauer/gitdump/releases](https://github.com/mrauer/gitdump/releases). Alternatively, if you're using Linux or Mac, you can simply copy and paste the provided commands.
 
 <!-- LINUX -->
 ### Linux
 
-```sh
-curl -Lo gitdump https://github.com/mrauer/gitdump/releases/download/v0.2.0/gitdump_0.2.0_linux_amd64 && chmod +x gitdump && sudo mv gitdump /usr/local/bin
-```
+>curl -Lo gitdump https://github.com/mrauer/gitdump/releases/download/v0.3.0/gitdump_0.3.0_linux_amd64 \
+&& chmod +x gitdump \
+&& sudo mv gitdump /usr/local/bin
 
 <!-- MAC -->
 ### Mac
 
-```sh
-curl -Lo gitdump https://github.com/mrauer/gitdump/releases/download/v0.2.0/gitdump_0.2.0_darwin_amd64 && chmod +x gitdump && sudo mv gitdump /usr/local/bin
-```
+>curl -Lo gitdump https://github.com/mrauer/gitdump/releases/download/v0.3.0/gitdump_0.3.0_darwin_amd64 \
+&& chmod +x gitdump \
+&& sudo mv gitdump /usr/local/bin
 
 <!-- CONFIGURATION -->
 ## Configuration
 
-Once the software can be run from your machine the next step is to configure it.
+After successfully running the software on your machine, the next step is configuration.
 
-First you need to specify where the repositories will be downloaded in your machine:
+Start by specifying the directory where repositories will be downloaded on your machine:
 
-```sh
-gitdump config path <path>
-```
+>gitdump config path <path>
 
-Then we need a token to be authenticated on GitHub.
+Next, obtain an authentication token for GitHub.
 
-On your GitHub account, go to **Settings** > **Developer settings** > **Personal access tokens**
+Navigate to your GitHub account, go to **Settings** > **Developer settings** > **Personal access tokens**.
 
-In there, click on **Generate new token**. Check the **repo** scope (Full control of private repositories).
+Click on **Generate new token**, ensure the **repo** scope is selected (Full control of private repositories).
 
-Copy the token and type the following command:
+Copy the token and use the following command:
 
-```sh
-gitdump config token <github_token>
-```
+>gitdump config token <github_token>
 
 Example:
 
@@ -88,38 +82,36 @@ gitdump config token aid6acceae52aa987303421fd757ff684d4f2b9d
 <!-- USAGE -->
 ## Usage
 
-Those are the main commands you can use:
+Here, you'll find the key commands for using GitDump:
 
 ```sh
-gitdump users ls <user> (list the repositories of a public user)
+gitdump users ls <user> (list repositories of a public user)
 gitdump users get <user> <repository> (download a public repository)
 gitdump users dump <user> (download all repositories from a public user)
 
-gitdump owners ls <owner> (list the repositories of a private user)
+gitdump owners ls <owner> (list repositories of a private user)
 gitdump owners get <owner> <repository> (download a private repository)
 gitdump owners dump <owner> (download all repositories from a private user)
 
 gitdump orgs ls (list all organizations in your account)
-gitdump orgs ls <organization> (list the repositories of an organization)
+gitdump orgs ls <organization> (list repositories of an organization)
 gitdump orgs get <organization> <repository> (download an organization repository)
 gitdump orgs dump <organization> (download all repositories from an organization)
 ```
 
 Example:
 
-```sh
-gitdump users ls Netflix (list all public repositories of Netflix)
-```
+>gitdump users ls netflix (list all public repositories from Netflix)
 
 <!-- CONTRIBUTE -->
 ## Contribute
 
-If you have any ideas or find a bug, you could always submit on the `issues` section but you can also directly help since the project is open source. Those are the commands you need to run on a local machine:
+If you come up with any ideas or discover a bug, feel free to submit them in the `issues` section. Moreover, you have the opportunity to contribute directly to the project, given its open-source nature. To get started, execute the following commands on your local machine:
 
 ```sh
-make dev (run a dev machine assuming you have docker installed)
-make binary (generate a binary)
-make releases (generate the releases for all environments)
+make dev (to run a development machine assuming Docker is installed)
+make binary (to generate a binary)
+make releases (to generate releases for all environments)
 ```
 
 <!-- LICENSE -->

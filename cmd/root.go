@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -13,37 +14,16 @@ import (
 const (
 	CONFIG_FILE_NAME = ".gitdump"
 	CONFIG_FILE_TYPE = "yaml"
+	CONFIG_FILE_PERSM = 0700
 )
-
-var str = `
-Usage: gitdump SCOPE COMMAND [ARG1] [ARG2]...
-
-A tool for downloading GitHub repositories
-
-Scopes:
-  users    Public repositories
-  owners   Private repositories (require authentication)
-  orgs     Organizations repositories (require authentication)
-
-Commands:
-  ls       List the repositories
-  get      Download a single repository
-  dump     Download all repositories
-  config   Configuration
-
-Args:
-  user     Public account
-  owner    Account associated with the the token
-  org      Organization name
-  repo     Repository name
-`
 
 var rootCmd = &cobra.Command{
 	Use:   "gitdump",
 	Short: "A tool for downloading GitHub repositories",
 	Long:  `A tool for downloading GitHub repositories`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(str)
+		log.Println("Welcome to GitDump!")
+		log.Println("For usage information, run 'gitdump --help'")
 	},
 }
 
@@ -66,26 +46,27 @@ func initConfig() {
 	viper.SetConfigType(CONFIG_FILE_TYPE)
 
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		log.Printf("Using config file: %s\n", viper.ConfigFileUsed())
 	} else {
-		config_file_path := fmt.Sprintf("%s/%s.%s", home, CONFIG_FILE_NAME, CONFIG_FILE_TYPE)
+		configFilePath := fmt.Sprintf("%s/%s.%s", home, CONFIG_FILE_NAME, CONFIG_FILE_TYPE)
 
-		new, err := os.Create(config_file_path)
+		newFile, err := os.Create(configFilePath)
 		if err != nil {
-			fmt.Println(err)
+			log.Fatal(err)
 		}
-		defer new.Close()
+		defer newFile.Close()
 
-		err = os.Chmod(config_file_path, 0700)
+		err = os.Chmod(configFilePath, CONFIG_FILE_PERSM)
 		if err != nil {
-			fmt.Println(err)
+			log.Fatal(err)
 		}
 
-		viper.Set("created_at", fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04:05")))
+		viper.Set("created_at", time.Now().Format("2006-01-02 15:04:05"))
 		viper.WriteConfig()
 
 		if err := viper.ReadInConfig(); err != nil {
-			fmt.Printf("Error reading config file, %s", err)
+			log.Printf("Error reading config file: %s\n", err)
 		}
+		log.Printf("Config file created at: %s\n", configFilePath)
 	}
 }

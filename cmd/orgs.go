@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
@@ -29,9 +31,10 @@ var orgsListCmd = &cobra.Command{
 	Long:  `List the organizations granted to the auth token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
+			log.Println("Listing organizations...")
 			lib.ListOrganizations(args)
-		}
-		if len(args) == 1 {
+		} else if len(args) == 1 {
+			log.Printf("Listing repositories for organization '%s'...", args[0])
 			lib.ListOrganizationRepositories(args)
 		}
 	},
@@ -42,7 +45,9 @@ var orgsGetCmd = &cobra.Command{
 	Short: "Download an organization repository",
 	Long:  `Download an organization repository granted to the auth token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Downloading organization repository...")
 		lib.GetOrganizationRepository(args)
+		log.Println("Download completed.")
 	},
 }
 
@@ -51,6 +56,8 @@ var orgsDumpCmd = &cobra.Command{
 	Short: "Dump organization repositories",
 	Long:  `Download all organization repositories granted to the auth token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Dumping all organization repositories...")
 		lib.DumpOrganizationRepositories(args)
+		log.Println("Dump completed.")
 	},
 }

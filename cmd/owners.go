@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
@@ -25,8 +27,9 @@ Private repositories commands:
 var ownersListCmd = &cobra.Command{
 	Use:   "ls",
 	Short: "List private repositories.",
-	Long:  `List the private repositories of the auth token owner`,
+	Long:  `List the private repositories of the authenticated token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Listing private repositories...")
 		lib.ListPrivateRepositories()
 	},
 }
@@ -34,17 +37,21 @@ var ownersListCmd = &cobra.Command{
 var ownersGetCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Download a private repository",
-	Long:  `Download a private repository from the auth token owner`,
+	Long:  `Download a private repository from the authenticated token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Downloading private repository...")
 		lib.GetPrivateRepository(args)
+		log.Println("Download completed.")
 	},
 }
 
 var ownersDumpCmd = &cobra.Command{
 	Use:   "dump",
 	Short: "Dump all repositories",
-	Long:  `Download all private repositories from the auth token owner`,
+	Long:  `Download all private repositories from the authenticated token owner`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Dumping all private repositories...")
 		lib.DumpPrivateRepositories(args)
+		log.Println("Dump completed.")
 	},
 }

@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
@@ -45,6 +47,8 @@ var usersDumpCmd = &cobra.Command{
 	Short: "Dump all public repositories",
 	Long:  `Download all public repositories from a public user account`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Dumping all public repositories...")
 		lib.DumpPublicRepositories(args)
+		log.Println("Dump completed.")
 	},
 }
