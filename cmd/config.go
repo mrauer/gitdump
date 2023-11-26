@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/mrauer/gitdump/lib"
 	"github.com/spf13/cobra"
 )
@@ -26,7 +28,9 @@ var configTokenCmd = &cobra.Command{
 	Long:  `Add your GitHub Token as an argument`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Setting GitHub Token...")
 		lib.ConfigToken(args)
+		log.Println("GitHub Token set successfully.")
 	},
 }
 
@@ -36,6 +40,8 @@ var configPathCmd = &cobra.Command{
 	Long:  `This will be where your files will be downloaded`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Println("Setting download path...")
 		lib.ConfigPath(args)
+		log.Println("Download path set successfully.")
 	},
 }
